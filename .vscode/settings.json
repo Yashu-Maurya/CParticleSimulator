@@ -1,0 +1,21 @@
+{
+    "files.associations": {
+        "chrono": "c",
+        "stdio.h": "c",
+        "raylib.h": "c",
+        "math.h": "c",
+        "cstdlib": "c",
+        "queue": "c",
+        "stack": "c",
+        "random": "c",
+        "raymath.h": "c",
+        "__locale": "c",
+        "optional": "c",
+        "expected": "c",
+        "regex": "c",
+        "complex": "c",
+        "valarray": "c",
+        "cmath": "c",
+        "particle.h": "c"
+    }
+}
