@@ -1,0 +1,91 @@
+
+#include "main.h"
+#include "particle.h"
+
+#define WIDTH 1280
+#define HEIGHT 720
+
+int main(void) {
+    // Initialization
+    SetConfigFlags(FLAG_MSAA_4X_HINT);
+    InitWindow(WIDTH, HEIGHT, "BATA BING BATA BOOM");
+    SetTargetFPS(60);
+
+    Vector3 cubePositions[100] = {(Vector3){0.0f, 0.0f, 0.0f}};
+    int k = 1;
+
+    Camera3D camera = {0};
+    camera.position = (Vector3){50.0f, 50.0f, 50.0f};
+    camera.target = cubePositions[0];
+    camera.up = (Vector3){0.0f, 1.0f, 0.0f};
+    camera.fovy = 60.0f;
+    camera.projection = CAMERA_PERSPECTIVE;
+
+    Vector3 cubePosition = {0.0f, 0.0f, 0.0f};
+    // Model cubeModel = LoadModelFromMesh(GenMeshCube(2.0f, 2.0f, 2.0f));
+    Model cubeModels[50] = {LoadModelFromMesh(GenMeshCube(2.0f, 2.0f, 2.0f))};
+    float rotationAngle = 0.0f;
+
+    DisableCursor();
+    float r = 10.0f;
+    float x = 0.0f;
+
+    while (!WindowShouldClose()) {
+        UpdateCamera(&camera, CAMERA_FREE);
+        rotationAngle += 0.01f;
+
+        for (int j = 0; j < k; j += 1) {
+            cubeModels[j].transform = MatrixRotateXYZ(
+                (Vector3){cos(PI + ((float)j + 2.0f) * rotationAngle),
+                          (sin(PI + ((float)j + 2.0f) * rotationAngle)), 0.0f});
+            if (j % 2 == 0) {
+                cubePositions[j].x = (j * 2.0f) * cos(PI + rotationAngle);
+            } else {
+                cubePositions[j].y = (j * 2.0f) * sin(PI + rotationAngle) - (j * 2.0f) * cos(PI + rotationAngle);
+            }
+        }
+
+        if (IsKeyPressed(KEY_W) && k < 50) {
+            x += 2.0f;
+            cubePositions[k] = (Vector3){cubePositions[0].x + x, 0.0f, 0.0f};
+            cubePositions[k + 1] =
+                (Vector3){0.0f, cubePositions[0].y + x, 0.0f};
+            cubeModels[k] = LoadModelFromMesh(GenMeshCube(2.0f, 2.0f, 2.0f));
+            cubeModels[k + 1] =
+                LoadModelFromMesh(GenMeshCube(2.0f, 2.0f, 2.0f));
+
+            k += 2;
+        }
+
+        if (IsKeyPressed(KEY_S) && k > 1) {
+            x -= 2.0f;
+            k -= 2;
+        }
+
+        BeginDrawing();
+        ClearBackground(RAYWHITE);
+
+        BeginMode3D(camera);
+
+        for (int i = 0; i < k; i += 1) {
+            DrawModel(cubeModels[i], cubePositions[i], 1.0f,
+                      CLITERAL(Color){0, 121 + i*10, 241, 255});
+            DrawModelWires(cubeModels[i], cubePositions[i], 1.0f,
+                           CLITERAL(Color){0, i*10, 241, 255});
+        }
+
+        EndMode3D();
+
+        
+        DrawFPS(10, 40);
+
+        EndDrawing();
+    }
+
+    for (int l = 0; l < k; l += 1) {
+        UnloadModel(cubeModels[l]);
+    }
+    CloseWindow();
+
+    return 0;
+}

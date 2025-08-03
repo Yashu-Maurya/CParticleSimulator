@@ -1,0 +1,20 @@
+[
+{
+  "directory": "/Users/yashumaurya/Documents/ParticleSimulator/build",
+  "command": "/opt/homebrew/bin/aarch64-apple-darwin24-gcc-15  -I/Users/yashumaurya/Documents/ParticleSimulator/src/include -isystem /opt/homebrew/include -g -std=gnu17 -arch arm64 -I/opt/homebrew/Cellar/raylib/5.5/include -o CMakeFiles/ParticleSimulator.dir/src/emitter.c.o -c /Users/yashumaurya/Documents/ParticleSimulator/src/emitter.c",
+  "file": "/Users/yashumaurya/Documents/ParticleSimulator/src/emitter.c",
+  "output": "CMakeFiles/ParticleSimulator.dir/src/emitter.c.o"
+},
+{
+  "directory": "/Users/yashumaurya/Documents/ParticleSimulator/build",
+  "command": "/opt/homebrew/bin/aarch64-apple-darwin24-gcc-15  -I/Users/yashumaurya/Documents/ParticleSimulator/src/include -isystem /opt/homebrew/include -g -std=gnu17 -arch arm64 -I/opt/homebrew/Cellar/raylib/5.5/include -o CMakeFiles/ParticleSimulator.dir/src/main.c.o -c /Users/yashumaurya/Documents/ParticleSimulator/src/main.c",
+  "file": "/Users/yashumaurya/Documents/ParticleSimulator/src/main.c",
+  "output": "CMakeFiles/ParticleSimulator.dir/src/main.c.o"
+},
+{
+  "directory": "/Users/yashumaurya/Documents/ParticleSimulator/build",
+  "command": "/opt/homebrew/bin/aarch64-apple-darwin24-gcc-15  -I/Users/yashumaurya/Documents/ParticleSimulator/src/include -isystem /opt/homebrew/include -g -std=gnu17 -arch arm64 -I/opt/homebrew/Cellar/raylib/5.5/include -o CMakeFiles/ParticleSimulator.dir/src/particle.c.o -c /Users/yashumaurya/Documents/ParticleSimulator/src/particle.c",
+  "file": "/Users/yashumaurya/Documents/ParticleSimulator/src/particle.c",
+  "output": "CMakeFiles/ParticleSimulator.dir/src/particle.c.o"
+}
+]
