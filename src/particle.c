@@ -12,8 +12,16 @@ void changeParticlePosition(particle* p, Vector3 acceleration) {
     if(!p) {
         return;
     }
-    float dt = 1/FPS;
-    
+    float dt = 1/((float)FPS);
+
+    acceleration = Vector3Normalize(acceleration); // Direction Vector
+    p->velocity = Vector3Add(p->velocity,Vector3Scale(acceleration, 1000.0f * dt));
+
+    // friction
+    float friction = 0.98f;
+    p->velocity = Vector3Scale(p->velocity, friction);
+
+    p->pos = Vector3Add(p->pos, Vector3Scale(p->velocity, dt));
 }
 
 void renderParticle(particle* p) {
