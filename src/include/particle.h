@@ -29,4 +29,7 @@ void changeDirectionByAngle(particle* p, float radian, Axis axis); // TODO;
 
 void changeVelocityVector(particle* p, Vector3 v);
 
+void updateParticlePosition(particle* p);
+void updateParticleVelocity(particle* p) ;
+
 #endif

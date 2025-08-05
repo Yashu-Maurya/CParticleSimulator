@@ -9,4 +9,4 @@
 #define BOX_CONSTRAINT_X 200
 #define BOX_CONSTRAINT_Y 200
 #define BOX_CONSTRAINT_Z 200
-#define FPS 60
+#define FPS 120

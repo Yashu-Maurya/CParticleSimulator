@@ -1,21 +1,23 @@
 #include "particle.h"
 
-void developParticle(particle* p, Vector3 pos, Vector3 velocity, Vector3 acceleration, Color color, float size) {
-                        p->pos = pos;
-                        p->velocity = velocity;
-                        p->acceleration = acceleration;
-                        p->color = color;
-                        p->size = size;
-                     }
+void developParticle(particle* p, Vector3 pos, Vector3 velocity,
+                     Vector3 acceleration, Color color, float size) {
+    p->pos = pos;
+    p->velocity = velocity;
+    p->acceleration = acceleration;
+    p->color = color;
+    p->size = size;
+}
 
 void changeParticlePosition(particle* p, Vector3 acceleration) {
-    if(!p) {
+    if (!p) {
         return;
     }
-    float dt = 1/((float)FPS);
+    float dt = 1 / ((float)FPS);
 
-    acceleration = Vector3Normalize(acceleration); // Direction Vector
-    p->velocity = Vector3Add(p->velocity,Vector3Scale(acceleration, 1000.0f * dt));
+    acceleration = Vector3Normalize(acceleration);  // Direction Vector
+    p->velocity =
+        Vector3Add(p->velocity, Vector3Scale(acceleration, 1000.0f * dt));
 
     // friction
     float friction = 0.98f;
@@ -24,13 +26,28 @@ void changeParticlePosition(particle* p, Vector3 acceleration) {
     p->pos = Vector3Add(p->pos, Vector3Scale(p->velocity, dt));
 }
 
-void changeVelocityVector(particle* p, Vector3 v) {
-    p->velocity = (Vector3) v;
+void changeVelocityVector(particle* p, Vector3 v) { p->velocity = (Vector3)v; }
+
+void updateParticlePosition(particle* p) {
+    float dt = 1 / ((float)FPS);
+    
+    // friction
+    p->acceleration = Vector3Scale(p->acceleration,0.999999f);
+     
+    p->pos = Vector3Add(Vector3Add(p->pos, p->velocity),
+                        Vector3Scale(p->acceleration,dt)); // x = x0 + ut + 1/at^2;
+
+}
+
+void updateParticleVelocity(particle* p) {
+    float dt = 1/ ((float)FPS);
+    p->velocity = Vector3Add(p->velocity,Vector3Scale(p->acceleration,dt));
+
 }
 
 void renderParticle(particle* p) {
-    if(!p){
+    if (!p) {
         return;
     }
-    DrawSphere(p->pos,p->size,p->color);
+    DrawSphere(p->pos, p->size, p->color);
 }

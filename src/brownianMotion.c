@@ -5,6 +5,9 @@ void brownianMotion(Camera3D camera) {
 
     // Initialize all particles
     for (int i = 0; i < PARTICLES_QUANTITY; i += 1) {
+        Vector3 random_accel = {(float)GetRandomValue(-100, 100) / 100.0f,
+                                (float)GetRandomValue(-100, 100) / 100.0f,
+                                (float)GetRandomValue(-100, 100) / 100.0f};
         developParticle(
             &particles[i],
             (Vector3){
@@ -13,7 +16,7 @@ void brownianMotion(Camera3D camera) {
                 (float)GetRandomValue(-BOX_CONSTRAINT_Z,
                                       BOX_CONSTRAINT_Z)},  // pos
             (Vector3){0.0f, 0.0f, 0.0f},                   // velocity
-            (Vector3){0.0f, 0.0f, 0.0f},                   // accel
+            (Vector3)random_accel,                         // accel
             (Color){(unsigned char)GetRandomValue(0, 255),
                     (unsigned char)GetRandomValue(0, 255),
                     (unsigned char)GetRandomValue(0, 255), 255},  // color (obv)
@@ -26,31 +29,40 @@ void brownianMotion(Camera3D camera) {
         BeginDrawing();
         ClearBackground(BLACK);
         for (int i = 0; i < PARTICLES_QUANTITY; i += 1) {
-            Vector3 random_accel = {(float)GetRandomValue(-100, 100) / 100.0f,
-                                    (float)GetRandomValue(-100, 100) / 100.0f,
-                                    (float)GetRandomValue(-100, 100) / 100.0f};
-            changeParticlePosition(&particles[i], random_accel);
+            // changeParticlePosition(&particles[i], random_accel);
 
             if (particles[i].pos.x >= 200 || particles[i].pos.x <= -200) {
+                if (i == 0) {
+                    printf("Previous X velocity %f\n", particles[0].velocity.x);
+                }
+
                 changeVelocityVector(
                     &particles[i],
                     (Vector3){-particles[i].velocity.x, particles[i].velocity.y,
                               particles[i].velocity.z});
+                updateParticleVelocity(&particles[i]);
+                if (i == 0) {
+                    printf("Changeing X velocity to %f\n",
+                           particles[0].velocity.x);
+                }
             }
             if (particles[i].pos.y >= 200 || particles[i].pos.y <= -200) {
                 changeVelocityVector(
                     &particles[i],
                     (Vector3){particles[i].velocity.x, -particles[i].velocity.y,
                               particles[i].velocity.z});
+                updateParticleVelocity(&particles[i]);
             }
             if (particles[i].pos.z >= 200 || particles[i].pos.z <= -200) {
                 changeVelocityVector(
                     &particles[i],
                     (Vector3){particles[i].velocity.x, particles[i].velocity.y,
                               -particles[i].velocity.z});
+                updateParticleVelocity(&particles[i]);
             }
-
+            updateParticlePosition(&particles[i]);
         }
+
         BeginMode3D(camera);
 
         DrawCubeWires((Vector3){0.0f, 0.0f, 0.0f}, 400, 400, 400, RED);
