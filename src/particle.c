@@ -24,6 +24,10 @@ void changeParticlePosition(particle* p, Vector3 acceleration) {
     p->pos = Vector3Add(p->pos, Vector3Scale(p->velocity, dt));
 }
 
+void changeVelocityVector(particle* p, Vector3 v) {
+    p->velocity = (Vector3) v;
+}
+
 void renderParticle(particle* p) {
     if(!p){
         return;

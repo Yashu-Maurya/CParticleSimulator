@@ -27,4 +27,6 @@ void renderParticle(particle* p);
 
 void changeDirectionByAngle(particle* p, float radian, Axis axis); // TODO;
 
+void changeVelocityVector(particle* p, Vector3 v);
+
 #endif
