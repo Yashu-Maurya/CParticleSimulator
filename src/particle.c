@@ -30,19 +30,22 @@ void changeVelocityVector(particle* p, Vector3 v) { p->velocity = (Vector3)v; }
 
 void updateParticlePosition(particle* p) {
     float dt = 1 / ((float)FPS);
-    
-    // friction
-    p->acceleration = Vector3Scale(p->acceleration,0.999999f);
-     
-    p->pos = Vector3Add(Vector3Add(p->pos, p->velocity),
-                        Vector3Scale(p->acceleration,dt)); // x = x0 + ut + 1/at^2;
 
+    // friction
+    p->acceleration = Vector3Scale(p->acceleration, 0.99999f);
+
+    p->pos =
+        Vector3Add(Vector3Add(p->pos, p->velocity),
+                   Vector3Scale(p->acceleration, dt));  // x = x0 + ut + 1/at^2;
 }
 
 void updateParticleVelocity(particle* p) {
-    float dt = 1/ ((float)FPS);
-    p->velocity = Vector3Add(p->velocity,Vector3Scale(p->acceleration,dt));
-
+    float dt = 1 / ((float)FPS);
+    p->velocity = Vector3Add(p->velocity, Vector3Scale(p->acceleration, 100.0f*dt));
+}
+void changeParticleAcceleration(particle* p, Vector3 acceleration) {
+    float dt = 1 / ((float)FPS);
+    p->acceleration = (Vector3) acceleration;
 }
 
 void renderParticle(particle* p) {

@@ -29,28 +29,27 @@ void brownianMotion(Camera3D camera) {
         BeginDrawing();
         ClearBackground(BLACK);
         for (int i = 0; i < PARTICLES_QUANTITY; i += 1) {
-            // changeParticlePosition(&particles[i], random_accel);
-
+// Collision detection for Bounded Box.
             if (particles[i].pos.x >= 200 || particles[i].pos.x <= -200) {
-                if (i == 0) {
-                    printf("Previous X velocity %f\n", particles[0].velocity.x);
-                }
-
                 changeVelocityVector(
                     &particles[i],
                     (Vector3){-particles[i].velocity.x, particles[i].velocity.y,
                               particles[i].velocity.z});
+                changeParticleAcceleration(
+                    &particles[i], (Vector3){-particles[i].acceleration.x,
+                                             particles[i].acceleration.y,
+                                             particles[i].acceleration.z});
                 updateParticleVelocity(&particles[i]);
-                if (i == 0) {
-                    printf("Changeing X velocity to %f\n",
-                           particles[0].velocity.x);
-                }
             }
             if (particles[i].pos.y >= 200 || particles[i].pos.y <= -200) {
                 changeVelocityVector(
                     &particles[i],
                     (Vector3){particles[i].velocity.x, -particles[i].velocity.y,
                               particles[i].velocity.z});
+                changeParticleAcceleration(
+                    &particles[i], (Vector3){particles[i].acceleration.x,
+                                             -particles[i].acceleration.y,
+                                             particles[i].acceleration.z});
                 updateParticleVelocity(&particles[i]);
             }
             if (particles[i].pos.z >= 200 || particles[i].pos.z <= -200) {
@@ -58,6 +57,10 @@ void brownianMotion(Camera3D camera) {
                     &particles[i],
                     (Vector3){particles[i].velocity.x, particles[i].velocity.y,
                               -particles[i].velocity.z});
+                changeParticleAcceleration(
+                    &particles[i], (Vector3){particles[i].acceleration.x,
+                                             particles[i].acceleration.y,
+                                             -particles[i].acceleration.z});
                 updateParticleVelocity(&particles[i]);
             }
             updateParticlePosition(&particles[i]);
