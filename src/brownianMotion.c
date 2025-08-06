@@ -5,9 +5,9 @@ void brownianMotion(Camera3D camera) {
 
     // Initialize all particles
     for (int i = 0; i < PARTICLES_QUANTITY; i += 1) {
-        Vector3 random_accel = {(float)GetRandomValue(-100, 100) / 100.0f,
-                                (float)GetRandomValue(-100, 100) / 100.0f,
-                                (float)GetRandomValue(-100, 100) / 100.0f};
+        Vector3 random_accel = {(float)GetRandomValue(-100, 100),
+                                (float)GetRandomValue(-100, 100),
+                                (float)GetRandomValue(-100, 100)};
         developParticle(
             &particles[i],
             (Vector3){
@@ -29,7 +29,7 @@ void brownianMotion(Camera3D camera) {
         BeginDrawing();
         ClearBackground(BLACK);
         for (int i = 0; i < PARTICLES_QUANTITY; i += 1) {
-// Collision detection for Bounded Box.
+            // Collision detection for Bounded Box.
             if (particles[i].pos.x >= 200 || particles[i].pos.x <= -200) {
                 changeVelocityVector(
                     &particles[i],
