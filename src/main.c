@@ -25,8 +25,8 @@ int main(void) {
 
     // brownianMotion(camera); // Uncomment for brownian motion without
     // collision. 
-    // brownianMotionWithParticleCollision(camera); // Uncomment for
+    brownianMotionWithParticleCollision(camera); // Uncomment for
     // brownian motion with collision
-    gravitySim(camera);
+    // gravitySim(camera);
     return 0;
 }

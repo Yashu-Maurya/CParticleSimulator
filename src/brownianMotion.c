@@ -5,9 +5,9 @@ void brownianMotion(Camera3D camera) {
 
     // Initialize all particles
     for (int i = 0; i < PARTICLES_QUANTITY; i += 1) {
-        Vector3 random_accel = {(float)GetRandomValue(-100, 100),
-                                (float)GetRandomValue(-100, 100),
-                                (float)GetRandomValue(-100, 100)};
+        Vector3 random_accel = {(float)GetRandomValue(-100, 100)/100.0f,
+                                (float)GetRandomValue(-100, 100)/100.0f,
+                                (float)GetRandomValue(-100, 100)/100.0f};
         developParticle(
             &particles[i],
             (Vector3){
@@ -29,40 +29,9 @@ void brownianMotion(Camera3D camera) {
         BeginDrawing();
         ClearBackground(BLACK);
         for (int i = 0; i < PARTICLES_QUANTITY; i += 1) {
-            // Collision detection for Bounded Box.
-            if (particles[i].pos.x >= 200 || particles[i].pos.x <= -200) {
-                changeVelocityVector(
-                    &particles[i],
-                    (Vector3){-particles[i].velocity.x, particles[i].velocity.y,
-                              particles[i].velocity.z});
-                changeParticleAcceleration(
-                    &particles[i], (Vector3){-particles[i].acceleration.x,
-                                             particles[i].acceleration.y,
-                                             particles[i].acceleration.z});
-                updateParticleVelocity(&particles[i]);
-            }
-            if (particles[i].pos.y >= 200 || particles[i].pos.y <= -200) {
-                changeVelocityVector(
-                    &particles[i],
-                    (Vector3){particles[i].velocity.x, -particles[i].velocity.y,
-                              particles[i].velocity.z});
-                changeParticleAcceleration(
-                    &particles[i], (Vector3){particles[i].acceleration.x,
-                                             -particles[i].acceleration.y,
-                                             particles[i].acceleration.z});
-                updateParticleVelocity(&particles[i]);
-            }
-            if (particles[i].pos.z >= 200 || particles[i].pos.z <= -200) {
-                changeVelocityVector(
-                    &particles[i],
-                    (Vector3){particles[i].velocity.x, particles[i].velocity.y,
-                              -particles[i].velocity.z});
-                changeParticleAcceleration(
-                    &particles[i], (Vector3){particles[i].acceleration.x,
-                                             particles[i].acceleration.y,
-                                             -particles[i].acceleration.z});
-                updateParticleVelocity(&particles[i]);
-            }
+            checkForBoundingBox(&particles[i]);
+
+            updateParticleVelocity(&particles[i]);
             updateParticlePosition(&particles[i]);
         }
 
@@ -81,3 +50,4 @@ void brownianMotion(Camera3D camera) {
     }
     CloseWindow();
 }
+

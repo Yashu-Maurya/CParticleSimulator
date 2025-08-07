@@ -1,8 +1,6 @@
 #include "gravity.h"
 
 // declaring functions.
-void checkForBoundingBox(particle* particles, int i);
-
 void gravitySim(Camera3D camera) {
     particle particles[PARTICLES_QUANTITY];
 
@@ -14,7 +12,7 @@ void gravitySim(Camera3D camera) {
             &particles[i],
             (Vector3){
                 (float)GetRandomValue(-BOX_CONSTRAINT_X, BOX_CONSTRAINT_X),
-                (float)GetRandomValue(-BOX_CONSTRAINT_Y, BOX_CONSTRAINT_Y),
+                (float)GetRandomValue(0, BOX_CONSTRAINT_Y),
                 (float)GetRandomValue(-BOX_CONSTRAINT_Z,
                                       BOX_CONSTRAINT_Z)},  // pos
             (Vector3){0.0f, 0.0f, 0.0f},                   // velocity
@@ -32,9 +30,10 @@ void gravitySim(Camera3D camera) {
         ClearBackground(BLACK);
         for (int i = 0; i < PARTICLES_QUANTITY; i += 1) {
             for (int j = i; j < PARTICLES_QUANTITY; j += 1) {
-                checkForCollision(particles, i, j);
+                checkForCollision(&particles[i],&particles[j]);
             }
-            checkForBoundingBox(particles, i);
+            checkForBoundingBox(&particles[i]);
+            
             updateParticleVelocity(&particles[i]);
             updateParticlePosition(&particles[i]);
         }
@@ -53,23 +52,4 @@ void gravitySim(Camera3D camera) {
         EndDrawing();
     }
     CloseWindow();
-}
-
-void checkForBoundingBox(particle* particles, int i) {
-    if (particles[i].pos.x >= 200 || particles[i].pos.x <= -200) {
-        changeVelocityVector(&particles[i], (Vector3){-particles[i].velocity.x,
-                                                      particles[i].velocity.y,
-                                                      particles[i].velocity.z});
-    }
-    if (particles[i].pos.y >= 200 || particles[i].pos.y <= -200) {
-        changeVelocityVector(&particles[i], (Vector3){particles[i].velocity.x,
-                                                      -particles[i].velocity.y,
-                                                      particles[i].velocity.z});
-    }
-    if (particles[i].pos.z >= 200 || particles[i].pos.z <= -200) {
-        changeVelocityVector(
-            &particles[i],
-            (Vector3){particles[i].velocity.x, particles[i].velocity.y,
-                      -particles[i].velocity.z});
-    }
 }
