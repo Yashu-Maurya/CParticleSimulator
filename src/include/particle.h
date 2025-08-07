@@ -19,7 +19,7 @@ void developParticle(particle* p, Vector3 pos, Vector3 velocity,
 
 void changeParticlePosition(particle* p, Vector3 acceleration);
 
-void changeParticleAcceleration(particle* p, Vector3 acceleration);  // TODO
+void changeParticleAcceleration(particle* p, Vector3 acceleration);
 void renderParticle(particle* p);
 
 void changeDirectionByAngle(particle* p, float radian, Axis axis);  // TODO;
@@ -29,7 +29,9 @@ void changeVelocityVector(particle* p, Vector3 v);
 void updateParticlePosition(particle* p);
 void updateParticleVelocity(particle* p);
 
-void checkForCollision(particle* particles, int i, int j);
+// void checkForCollision(particle* particles, int i, int j);
+void checkForCollision(particle* p1, particle* p2);
+void checkForBoundingBox(particle* p);
 
 
 #endif

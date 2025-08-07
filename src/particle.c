@@ -46,7 +46,6 @@ void updateParticleVelocity(particle* p) {
 }
 
 void changeParticleAcceleration(particle* p, Vector3 acceleration) {
-    float dt = 1 / ((float)FPS);
     p->acceleration = (Vector3)acceleration;
 }
 
@@ -57,52 +56,53 @@ void renderParticle(particle* p) {
     DrawSphere(p->pos, p->size, p->color);
 }
 
-void checkForCollision(particle* particles, int i, int j) {
-    Vector3 distanceVectorP1toP2;
-    Vector3 dxVector = Vector3Subtract(particles[i].pos, particles[j].pos);
-    distanceVectorP1toP2 = Vector3Multiply(dxVector, dxVector);
+void checkForCollision(particle* p1, particle* p2) {
 
-    float radiusSum = (particles[i].size + particles[j].size) *
-                      (particles[i].size + particles[j].size);
+    float dx = p2->pos.x - p1->pos.x;
+    float dy = p2->pos.y - p1->pos.y;
+    float dz = p2->pos.z - p1->pos.z;
 
-    if (distanceVectorP1toP2.x  == radiusSum) {  // Getting the absolute value of distance between two
-              // particles. on X-Axis here.
-        changeVelocityVector(&particles[i], (Vector3){
-                                                -particles[i].velocity.x,
-                                                particles[i].velocity.y,
-                                                particles[i].velocity.z,
-                                            });
+    float distanceSquared = dx * dx + dy * dy + dz * dz;
 
-        changeVelocityVector(&particles[j], (Vector3){
-                                                -particles[j].velocity.x,
-                                                particles[j].velocity.y,
-                                                particles[j].velocity.z,
-                                            });
+    float radiiSumSquared = (p1->size + p2->size) * (p1->size + p2->size);
+
+    if (distanceSquared <= radiiSumSquared) {
+
+        Vector3 tempVelocity = p1->velocity;
+        changeVelocityVector(p1, p2->velocity);
+        changeVelocityVector(p2, tempVelocity);
+
     }
-    if (distanceVectorP1toP2.y  == radiusSum) {
-        changeVelocityVector(&particles[i], (Vector3){
-                                                particles[i].velocity.x,
-                                                -particles[i].velocity.y,
-                                                particles[i].velocity.z,
-                                            });
+}
 
-        changeVelocityVector(&particles[j], (Vector3){
-                                                particles[j].velocity.x,
-                                                -particles[j].velocity.y,
-                                                particles[j].velocity.z,
-                                            });
+void checkForBoundingBox(particle* p) {
+    if (p->pos.x + p->size >= 200) {
+        p->pos.x = 200 - p->size;
+        changeVelocityVector(
+            p, (Vector3){-p->velocity.x, p->velocity.y, p->velocity.z});
+    } else if (p->pos.x - p->size <= -200) {
+        p->pos.x = -200 + p->size;
+        changeVelocityVector(
+            p, (Vector3){-p->velocity.x, p->velocity.y, p->velocity.z});
     }
-    if (distanceVectorP1toP2.z  == radiusSum) {
-        changeVelocityVector(&particles[i], (Vector3){
-                                                particles[i].velocity.x,
-                                                particles[i].velocity.y,
-                                                -particles[i].velocity.z,
-                                            });
 
-        changeVelocityVector(&particles[j], (Vector3){
-                                                particles[j].velocity.x,
-                                                particles[j].velocity.y,
-                                                -particles[j].velocity.z,
-                                            });
+    if (p->pos.y + p->size >= 200) {
+        p->pos.y = 200 - p->size;
+        changeVelocityVector(
+            p, (Vector3){p->velocity.x, -p->velocity.y, p->velocity.z});
+    } else if (p->pos.y - p->size <= -200) {
+        p->pos.y = -200 + p->size;
+        changeVelocityVector(
+            p, (Vector3){p->velocity.x, -p->velocity.y, p->velocity.z});
+    }
+
+    if (p->pos.z + p->size >= 200) {
+        p->pos.z = 200 - p->size;
+        changeVelocityVector(
+            p, (Vector3){p->velocity.x, p->velocity.y, -p->velocity.z});
+    } else if (p->pos.z - p->size <= -200) {
+        p->pos.z = -200 + p->size;
+        changeVelocityVector(
+            p, (Vector3){p->velocity.x, p->velocity.y, -p->velocity.z});
     }
 }
