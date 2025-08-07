@@ -65,7 +65,7 @@ void checkForCollision(particle* particles, int i, int j) {
     float radiusSum = (particles[i].size + particles[j].size) *
                       (particles[i].size + particles[j].size);
 
-    if (distanceVectorP1toP2.x  <= radiusSum) {  // Getting the absolute value of distance between two
+    if (distanceVectorP1toP2.x  == radiusSum) {  // Getting the absolute value of distance between two
               // particles. on X-Axis here.
         changeVelocityVector(&particles[i], (Vector3){
                                                 -particles[i].velocity.x,
@@ -79,7 +79,7 @@ void checkForCollision(particle* particles, int i, int j) {
                                                 particles[j].velocity.z,
                                             });
     }
-    if (distanceVectorP1toP2.y  <= radiusSum) {
+    if (distanceVectorP1toP2.y  == radiusSum) {
         changeVelocityVector(&particles[i], (Vector3){
                                                 particles[i].velocity.x,
                                                 -particles[i].velocity.y,
@@ -92,7 +92,7 @@ void checkForCollision(particle* particles, int i, int j) {
                                                 particles[j].velocity.z,
                                             });
     }
-    if (distanceVectorP1toP2.z  <= radiusSum) {
+    if (distanceVectorP1toP2.z  == radiusSum) {
         changeVelocityVector(&particles[i], (Vector3){
                                                 particles[i].velocity.x,
                                                 particles[i].velocity.y,

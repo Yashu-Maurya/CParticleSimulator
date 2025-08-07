@@ -1,8 +1,11 @@
 #include "main.h"
+
 #include "brownianMotion.h"
 #include "brownianMotionWithParticleCollision.h"
+#include "gravity.h"
 
 int main(void) {
+
     // Initialization
     SetConfigFlags(FLAG_MSAA_4X_HINT);
     InitWindow(WIDTH, HEIGHT, "BATA BING BATA BOOM");
@@ -19,8 +22,11 @@ int main(void) {
 
     DisableCursor();
     Vector3 gravity = {0.0f, 9.8f, 0.0f};
-   
-    // brownianMotion(camera); // Uncomment for brownian motion without collision.
-    brownianMotionWithParticleCollision(camera);
+
+    // brownianMotion(camera); // Uncomment for brownian motion without
+    // collision. 
+    // brownianMotionWithParticleCollision(camera); // Uncomment for
+    // brownian motion with collision
+    gravitySim(camera);
     return 0;
 }
