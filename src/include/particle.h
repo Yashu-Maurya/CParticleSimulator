@@ -29,4 +29,7 @@ void changeVelocityVector(particle* p, Vector3 v);
 void updateParticlePosition(particle* p);
 void updateParticleVelocity(particle* p);
 
+void checkForCollision(particle* particles, int i, int j);
+
+
 #endif
