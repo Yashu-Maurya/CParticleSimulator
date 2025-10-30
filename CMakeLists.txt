@@ -19,6 +19,9 @@ set(CMAKE_PREFIX_PATH /opt/homebrew)
 
 include(FetchContent)
 
+set(GIT_PROGRESS TRUE)
+
+set(FETCHCONTENT_QUIET FALSE)
 
 FetchContent_Declare(
   raylib

@@ -29,10 +29,7 @@ void brownianMotionWithParticleCollision(Camera3D camera) {
         BeginDrawing();
         ClearBackground(BLACK);
         for (int i = 0; i < PARTICLES_QUANTITY; i += 1) {
-
-
             for (int j = 0; j < PARTICLES_QUANTITY; j += 1) {
-
                 checkForCollision(&particles[i], &particles[j]);
             }
             checkForBoundingBox(&particles[i]);
@@ -44,7 +41,7 @@ void brownianMotionWithParticleCollision(Camera3D camera) {
         DrawCubeWires((Vector3){0.0f, 0.0f, 0.0f}, 400, 400, 400, RED);
 
         for (int i = 0; i < PARTICLES_QUANTITY; i += 1) {
-            renderParticle(&particles[i]);
+            renderMaxwellsParticle(&particles[i]);
         }
         EndMode3D();
 

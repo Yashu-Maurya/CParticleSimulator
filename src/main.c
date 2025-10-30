@@ -20,10 +20,28 @@ int main(void) {
     camera.fovy = 90.0f;
 
     DisableCursor();
-    // brownianMotion(camera); // Uncomment for brownian motion without
-    // collision. 
-    // brownianMotionWithParticleCollision(camera); // Uncomment for
-    // brownian motion with collision
+
+    printf("0: Brownian Motion\n 1: Brownian Motion with Collision\n 2: Gravity Simulation\n 3: Maxwell's Demon Simulation\nEnter your Choice: ");
+    enum Choices choice;
+    scanf("%d", &choice);
+
+    switch (choice) {
+        case BROWNIAN_MOTION:
+            brownianMotion(camera);
+            break;
+        case BROWNIAN_MOTION_WITH_PARTICLE_COLLISION:
+            brownianMotionWithParticleCollision(camera);
+            break;
+        case GRAVITY_SIMULATION:
+            gravitySim(camera);
+            break;
+        case MAXWELLS_DEMON_SIMULATION:
+            maxwellsDemonSim(camera);
+            break;
+        default:
+            printf("Invalid choice\n");
+            break;
+    };
     gravitySim(camera);
     return 0;
 }

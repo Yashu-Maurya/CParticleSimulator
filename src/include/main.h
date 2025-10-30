@@ -1,3 +1,13 @@
+#ifndef main_h
+    #define main_h
+    enum Choices {
+    BROWNIAN_MOTION,
+    BROWNIAN_MOTION_WITH_PARTICLE_COLLISION,
+    GRAVITY_SIMULATION,
+    MAXWELLS_DEMON_SIMULATION
+};
+
+
 #include <stdio.h>
 #include <raylib.h>
 #include <math.h>
@@ -10,3 +20,5 @@
 #define BOX_CONSTRAINT_Y 200
 #define BOX_CONSTRAINT_Z 200
 #define FPS 120
+#endif
+

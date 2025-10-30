@@ -34,7 +34,7 @@ void updateParticlePosition(particle* p) {
     p->pos = Vector3Add(
         Vector3Add(p->pos, Vector3Scale(p->velocity, dt)),
         Vector3Scale(p->acceleration,
-                     100.0f * 0.5 * dt * dt));  // x = x0 + ut + 1/at^2;
+                     100.0f * 0.5 * dt * dt));  // x = x0 + ut + 1/2*at^2;
 }
 
 void updateParticleVelocity(particle* p) {

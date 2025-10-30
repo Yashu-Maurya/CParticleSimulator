@@ -1,4 +1,4 @@
 #! /bin/bash
 
-cmake -B build && cmake --build build
+cmake -B build --log-level=VERBOSE && cmake --build build
 ./build/ParticleSimulator
