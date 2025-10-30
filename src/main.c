@@ -3,7 +3,7 @@
 #include "brownianMotion.h"
 #include "brownianMotionWithParticleCollision.h"
 #include "gravity.h"
-
+#include "maxwellsDemon.h"
 int main(void) {
 
     // Initialization

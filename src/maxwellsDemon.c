@@ -17,14 +17,14 @@ void maxwellsDemonSim(Camera3D camera) {
          Vector3 random_accel = {(float)GetRandomValue(-100, 100)/100.0f,
                                 (float)GetRandomValue(-100, 100)/100.0f,
                                 (float)GetRandomValue(-100, 100)/100.0f};
-        int temp = (float)GetRandomValue(MIN_TEMPERATURE,MAX_TEMPERATURE);
+        int temp = GetRandomValue(MIN_TEMPERATURE, MAX_TEMPERATURE);
         Color particle_color = {
-            (unsigned char)(255*((float)temp/100.0f)),
-            (unsigned char) 0.0f,
-            (unsigned char)(255*((float)(MAX_TEMPERATURE-temp)/100.0f)),
-
+            (unsigned char)(255 * ((float)temp / 100.0f)),
+            (unsigned char)0,
+            (unsigned char)(255 * ((float)(MAX_TEMPERATURE - temp) / 100.0f)),
+            255
         };
-        int mass = GetRandomValue(1,10); // in gms
+        int mass = GetRandomValue(1, 10); // in gms
         developMaxwellsParticle(&particles[i], pos, (Vector3){0.0f, 0.0f, 0.0f}, random_accel, particle_color, mass, temp);
     }
 
@@ -35,7 +35,7 @@ void maxwellsDemonSim(Camera3D camera) {
         ClearBackground(BLACK);
         for (int i = 0; i < PARTICLES_QUANTITY; i += 1) {
             for (int j = 0; j < PARTICLES_QUANTITY; j += 1) {
-                checkForMaxwellsCollision(&particles[i], &particles[j]);
+                checkForMaxwellsParticleCollision(&particles[i], &particles[j]);
             }
             checkForMaxwellsBoundingBox(&particles[i]);
             updateMaxwellsParticleVelocity(&particles[i]);
@@ -47,7 +47,7 @@ void maxwellsDemonSim(Camera3D camera) {
         DrawCubeWires((Vector3){0.0f, 0.0f, 0.0f}, 400, 400, 400, RED);
 
         for (int i = 0; i < PARTICLES_QUANTITY; i += 1) {
-            renderMaxwellsParticle(&particles[i].particle);
+           renderMaxwellsParticle(&particles[i]);
         }
         EndMode3D();
 

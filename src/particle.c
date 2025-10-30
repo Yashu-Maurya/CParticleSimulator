@@ -1,5 +1,7 @@
 #include "particle.h"
 
+static const Vector3 GLOBAL_GRAVITY = {0.0f, -9.8f, 0.0f};
+
 void developParticle(particle* p, Vector3 pos, Vector3 velocity,
                      Vector3 acceleration, Color color, float size) {
     p->pos = pos;
@@ -72,37 +74,53 @@ void checkForCollision(particle* p1, particle* p2) {
         changeVelocityVector(p1, p2->velocity);
         changeVelocityVector(p2, tempVelocity);
 
+        Vector3 tempAcceleration = p1->acceleration;
+        changeParticleAcceleration(p1, p2->acceleration);
+        changeParticleAcceleration(p2, tempAcceleration);
+
     }
 }
 
 void checkForBoundingBox(particle* p) {
     if (p->pos.x + p->size >= 200) {
         p->pos.x = 200 - p->size;
-        changeVelocityVector(
-            p, (Vector3){-p->velocity.x, p->velocity.y, p->velocity.z});
+        Vector3 other = Vector3Subtract(p->acceleration, GLOBAL_GRAVITY);
+        other.x = -other.x;
+        Vector3 newAcc = Vector3Add(other, GLOBAL_GRAVITY);
+        changeParticleAcceleration(p, newAcc);
     } else if (p->pos.x - p->size <= -200) {
         p->pos.x = -200 + p->size;
-        changeVelocityVector(
-            p, (Vector3){-p->velocity.x, p->velocity.y, p->velocity.z});
+        Vector3 other = Vector3Subtract(p->acceleration, GLOBAL_GRAVITY);
+        other.x = -other.x;
+        Vector3 newAcc = Vector3Add(other, GLOBAL_GRAVITY);
+        changeParticleAcceleration(p, newAcc);
     }
 
     if (p->pos.y + p->size >= 200) {
         p->pos.y = 200 - p->size;
-        changeVelocityVector(
-            p, (Vector3){p->velocity.x, -p->velocity.y, p->velocity.z});
+        Vector3 other = Vector3Subtract(p->acceleration, GLOBAL_GRAVITY);
+        other.y = -other.y;
+        Vector3 newAcc = Vector3Add(other, GLOBAL_GRAVITY);
+        changeParticleAcceleration(p, newAcc);
     } else if (p->pos.y - p->size <= -200) {
         p->pos.y = -200 + p->size;
-        changeVelocityVector(
-            p, (Vector3){p->velocity.x, -p->velocity.y, p->velocity.z});
+        Vector3 other = Vector3Subtract(p->acceleration, GLOBAL_GRAVITY);
+        other.y = -other.y;
+        Vector3 newAcc = Vector3Add(other, GLOBAL_GRAVITY);
+        changeParticleAcceleration(p, newAcc);
     }
 
     if (p->pos.z + p->size >= 200) {
         p->pos.z = 200 - p->size;
-        changeVelocityVector(
-            p, (Vector3){p->velocity.x, p->velocity.y, -p->velocity.z});
+        Vector3 other = Vector3Subtract(p->acceleration, GLOBAL_GRAVITY);
+        other.z = -other.z;
+        Vector3 newAcc = Vector3Add(other, GLOBAL_GRAVITY);
+        changeParticleAcceleration(p, newAcc);
     } else if (p->pos.z - p->size <= -200) {
         p->pos.z = -200 + p->size;
-        changeVelocityVector(
-            p, (Vector3){p->velocity.x, p->velocity.y, -p->velocity.z});
+        Vector3 other = Vector3Subtract(p->acceleration, GLOBAL_GRAVITY);
+        other.z = -other.z;
+        Vector3 newAcc = Vector3Add(other, GLOBAL_GRAVITY);
+        changeParticleAcceleration(p, newAcc);
     }
 }

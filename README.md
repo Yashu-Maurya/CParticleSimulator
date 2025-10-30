@@ -14,6 +14,8 @@
 - Make
 
 ## How to run
+- Clone repo
+	`git clone --recurse-submodules https://github.com/Yashu-Maurya/CParticleSimulator.git`
 - Make a build directory.
 	` mkdir build`
 - Run this if on linux or macos

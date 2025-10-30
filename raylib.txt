@@ -1,0 +1,6 @@
+git submodule add https://github.com/raysan5/raylib.git external/raylib
+cd external/raylib
+git checkout 5.5
+cd ../..
+git add .gitmodules external/raylib
+git commit -m "Add raylib 5.5 as a submodule"

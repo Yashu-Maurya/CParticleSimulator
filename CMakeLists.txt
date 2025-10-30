@@ -1,42 +1,30 @@
 # Use a modern CMake version
 cmake_minimum_required(VERSION 4.0)
 
-
-project(ParticleSimulator LANGUAGES C)
-
+project(ParticleSimulator LANGUAGES C OBJC)
 
 set(CMAKE_C_STANDARD 17)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 
-
 file(GLOB_RECURSE SOURCES "src/*.c")
-
 set(INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src/include")
 
 # for mac
 set(CMAKE_PREFIX_PATH /opt/homebrew)
 
+# --- Removed FetchContent commands ---
+# We no longer need FetchContent, GIT_PROGRESS, or FETCHCONTENT_QUIET
 
-include(FetchContent)
+# Add the raylib subdirectory
+# This path must match where you cloned the submodule
+add_subdirectory(external/raylib)
 
-set(GIT_PROGRESS TRUE)
-
-set(FETCHCONTENT_QUIET FALSE)
-
-FetchContent_Declare(
-  raylib
-  GIT_REPOSITORY https://github.com/raysan5/raylib.git
-  GIT_TAG        5.5 
-)
-
-
-FetchContent_MakeAvailable(raylib)
-
-# find_package(raylib REQUIRED)
+# --- No changes below this line ---
 add_executable(ParticleSimulator ${SOURCES})
 
 target_include_directories(ParticleSimulator PUBLIC ${INCLUDE_DIR})
 
+# This works because add_subdirectory() makes the "raylib" target available
 target_link_libraries(ParticleSimulator PUBLIC raylib)
 
 message(STATUS "Configured project: ${PROJECT_NAME}")

@@ -8,10 +8,10 @@ typedef struct maxwellsParticle {
     double temperature;
 } maxwellsParticle;
 
+void renderMaxwellsParticle(maxwellsParticle *p);
 void developMaxwellsParticle(maxwellsParticle *p, Vector3 pos, Vector3 velocity,
                         Vector3 acceleration, Color color, double mass,
                         double temperature);
-void renderMaxwellsParticle(maxwellsParticle *p);
 void checkForMaxwellsParticleCollision(maxwellsParticle *p1, maxwellsParticle *p2);
 void updateMaxwellsParticleVelocity(maxwellsParticle *p);
 void updateMaxwellsParticlePosition(maxwellsParticle *p);

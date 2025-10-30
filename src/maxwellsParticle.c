@@ -11,6 +11,7 @@ void developMaxwellsParticle(maxwellsParticle *p, Vector3 pos, Vector3 velocity,
 
     float size = ((int)cbrt(mass*0.75));
     size = size <= 1 ? 1: size;
+    size *= 5;
     p->particle.size = (int)size;
 
     p->mass = mass;
@@ -36,6 +37,14 @@ void updateMaxwellsParticleVelocity(maxwellsParticle *p) {
     updateParticleVelocity(&p->particle);
 }
 
+void updateMaxwellsParticleAcceleration(maxwellsParticle *p, Vector3 acceleration) {
+    changeParticleAcceleration(&p->particle, acceleration);
+}
+
+void updateMaxwellsParticlePosition(maxwellsParticle *p) {
+    updateParticlePosition(&p->particle);
+}
+
 void checkForMaxwellsBoundingBox(maxwellsParticle *p) {
-    updateParticleVelocity(&p->particle);
+    checkForBoundingBox(&p->particle);
 }
